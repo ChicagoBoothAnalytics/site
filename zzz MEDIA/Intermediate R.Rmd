@@ -1,0 +1,23 @@
+---
+title: 'Intermediate R Programming'
+output: html_document
+---
+
+```{r setup, include=FALSE}
+knitr::opts_chunk$set(echo = TRUE)
+```
+
+Today we are going to go step-by-step through a typical Booth workflow for a regression problem. The steps involved will be:  
+  
+1. Loading the Data  
+2. Understanding the Data  
+3. Cleaning the Data  
+4. Performing Analysis  
+5. Visualizing the Results  
+
+The dataset we will be working with today is the "mtcars" dataset, which comes preloaded with RStudio. You can load it anytime to practice by simply referencing it in R:
+```{r}
+print(mtcars)
+```
+
+That said, I have a slightly modified version that we will use to practice some concepts. Download it here: 
