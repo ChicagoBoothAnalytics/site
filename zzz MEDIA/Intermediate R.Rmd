@@ -9,7 +9,7 @@ output:
 knitr::opts_chunk$set(echo = TRUE)
 ```
 
-Today we are going to go step-by-step through a typical Booth workflow for a regression problem. The steps involved will be:  
+Today we are going to go step-by-step through a typical Booth workflow for a  regression problem. The steps involved will be:  
   
 **1. Loading the Data**  
 **2. Understanding the Data**  
@@ -26,7 +26,7 @@ I asked you to download a slightly modified version of the file to allow us to p
 ```{r}
 #The read.csv function allows us to load a comma separated values file into our R workspace
 #Remember you can use the ? symbol to load the native R help files at any time!
-data <- read.csv('D:\\Users\\Jeffrey\\Downloads\\mtcars_missing_data.csv')
+data <- read.csv("C:\\Users\\livef\\Downloads\\mtcars_missing_data.csv")
 #Note that R for Windows requires 2 "\" when calling a filepath 
 ```
 

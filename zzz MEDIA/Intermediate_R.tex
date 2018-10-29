@@ -1,0 +1,514 @@
+\documentclass[]{article}
+\usepackage{lmodern}
+\usepackage{amssymb,amsmath}
+\usepackage{ifxetex,ifluatex}
+\usepackage{fixltx2e} % provides \textsubscript
+\ifnum 0\ifxetex 1\fi\ifluatex 1\fi=0 % if pdftex
+  \usepackage[T1]{fontenc}
+  \usepackage[utf8]{inputenc}
+\else % if luatex or xelatex
+  \ifxetex
+    \usepackage{mathspec}
+  \else
+    \usepackage{fontspec}
+  \fi
+  \defaultfontfeatures{Ligatures=TeX,Scale=MatchLowercase}
+\fi
+% use upquote if available, for straight quotes in verbatim environments
+\IfFileExists{upquote.sty}{\usepackage{upquote}}{}
+% use microtype if available
+\IfFileExists{microtype.sty}{%
+\usepackage{microtype}
+\UseMicrotypeSet[protrusion]{basicmath} % disable protrusion for tt fonts
+}{}
+\usepackage[margin=1in]{geometry}
+\usepackage{hyperref}
+\hypersetup{unicode=true,
+            pdftitle={Intermediate R Programming},
+            pdfborder={0 0 0},
+            breaklinks=true}
+\urlstyle{same}  % don't use monospace font for urls
+\usepackage{color}
+\usepackage{fancyvrb}
+\newcommand{\VerbBar}{|}
+\newcommand{\VERB}{\Verb[commandchars=\\\{\}]}
+\DefineVerbatimEnvironment{Highlighting}{Verbatim}{commandchars=\\\{\}}
+% Add ',fontsize=\small' for more characters per line
+\usepackage{framed}
+\definecolor{shadecolor}{RGB}{248,248,248}
+\newenvironment{Shaded}{\begin{snugshade}}{\end{snugshade}}
+\newcommand{\KeywordTok}[1]{\textcolor[rgb]{0.13,0.29,0.53}{\textbf{#1}}}
+\newcommand{\DataTypeTok}[1]{\textcolor[rgb]{0.13,0.29,0.53}{#1}}
+\newcommand{\DecValTok}[1]{\textcolor[rgb]{0.00,0.00,0.81}{#1}}
+\newcommand{\BaseNTok}[1]{\textcolor[rgb]{0.00,0.00,0.81}{#1}}
+\newcommand{\FloatTok}[1]{\textcolor[rgb]{0.00,0.00,0.81}{#1}}
+\newcommand{\ConstantTok}[1]{\textcolor[rgb]{0.00,0.00,0.00}{#1}}
+\newcommand{\CharTok}[1]{\textcolor[rgb]{0.31,0.60,0.02}{#1}}
+\newcommand{\SpecialCharTok}[1]{\textcolor[rgb]{0.00,0.00,0.00}{#1}}
+\newcommand{\StringTok}[1]{\textcolor[rgb]{0.31,0.60,0.02}{#1}}
+\newcommand{\VerbatimStringTok}[1]{\textcolor[rgb]{0.31,0.60,0.02}{#1}}
+\newcommand{\SpecialStringTok}[1]{\textcolor[rgb]{0.31,0.60,0.02}{#1}}
+\newcommand{\ImportTok}[1]{#1}
+\newcommand{\CommentTok}[1]{\textcolor[rgb]{0.56,0.35,0.01}{\textit{#1}}}
+\newcommand{\DocumentationTok}[1]{\textcolor[rgb]{0.56,0.35,0.01}{\textbf{\textit{#1}}}}
+\newcommand{\AnnotationTok}[1]{\textcolor[rgb]{0.56,0.35,0.01}{\textbf{\textit{#1}}}}
+\newcommand{\CommentVarTok}[1]{\textcolor[rgb]{0.56,0.35,0.01}{\textbf{\textit{#1}}}}
+\newcommand{\OtherTok}[1]{\textcolor[rgb]{0.56,0.35,0.01}{#1}}
+\newcommand{\FunctionTok}[1]{\textcolor[rgb]{0.00,0.00,0.00}{#1}}
+\newcommand{\VariableTok}[1]{\textcolor[rgb]{0.00,0.00,0.00}{#1}}
+\newcommand{\ControlFlowTok}[1]{\textcolor[rgb]{0.13,0.29,0.53}{\textbf{#1}}}
+\newcommand{\OperatorTok}[1]{\textcolor[rgb]{0.81,0.36,0.00}{\textbf{#1}}}
+\newcommand{\BuiltInTok}[1]{#1}
+\newcommand{\ExtensionTok}[1]{#1}
+\newcommand{\PreprocessorTok}[1]{\textcolor[rgb]{0.56,0.35,0.01}{\textit{#1}}}
+\newcommand{\AttributeTok}[1]{\textcolor[rgb]{0.77,0.63,0.00}{#1}}
+\newcommand{\RegionMarkerTok}[1]{#1}
+\newcommand{\InformationTok}[1]{\textcolor[rgb]{0.56,0.35,0.01}{\textbf{\textit{#1}}}}
+\newcommand{\WarningTok}[1]{\textcolor[rgb]{0.56,0.35,0.01}{\textbf{\textit{#1}}}}
+\newcommand{\AlertTok}[1]{\textcolor[rgb]{0.94,0.16,0.16}{#1}}
+\newcommand{\ErrorTok}[1]{\textcolor[rgb]{0.64,0.00,0.00}{\textbf{#1}}}
+\newcommand{\NormalTok}[1]{#1}
+\usepackage{graphicx,grffile}
+\makeatletter
+\def\maxwidth{\ifdim\Gin@nat@width>\linewidth\linewidth\else\Gin@nat@width\fi}
+\def\maxheight{\ifdim\Gin@nat@height>\textheight\textheight\else\Gin@nat@height\fi}
+\makeatother
+% Scale images if necessary, so that they will not overflow the page
+% margins by default, and it is still possible to overwrite the defaults
+% using explicit options in \includegraphics[width, height, ...]{}
+\setkeys{Gin}{width=\maxwidth,height=\maxheight,keepaspectratio}
+\IfFileExists{parskip.sty}{%
+\usepackage{parskip}
+}{% else
+\setlength{\parindent}{0pt}
+\setlength{\parskip}{6pt plus 2pt minus 1pt}
+}
+\setlength{\emergencystretch}{3em}  % prevent overfull lines
+\providecommand{\tightlist}{%
+  \setlength{\itemsep}{0pt}\setlength{\parskip}{0pt}}
+\setcounter{secnumdepth}{0}
+% Redefines (sub)paragraphs to behave more like sections
+\ifx\paragraph\undefined\else
+\let\oldparagraph\paragraph
+\renewcommand{\paragraph}[1]{\oldparagraph{#1}\mbox{}}
+\fi
+\ifx\subparagraph\undefined\else
+\let\oldsubparagraph\subparagraph
+\renewcommand{\subparagraph}[1]{\oldsubparagraph{#1}\mbox{}}
+\fi
+
+%%% Use protect on footnotes to avoid problems with footnotes in titles
+\let\rmarkdownfootnote\footnote%
+\def\footnote{\protect\rmarkdownfootnote}
+
+%%% Change title format to be more compact
+\usepackage{titling}
+
+% Create subtitle command for use in maketitle
+\newcommand{\subtitle}[1]{
+  \posttitle{
+    \begin{center}\large#1\end{center}
+    }
+}
+
+\setlength{\droptitle}{-2em}
+
+  \title{Intermediate R Programming}
+    \pretitle{\vspace{\droptitle}\centering\huge}
+  \posttitle{\par}
+    \author{}
+    \preauthor{}\postauthor{}
+    \date{}
+    \predate{}\postdate{}
+  
+
+\begin{document}
+\maketitle
+
+Today we are going to go step-by-step through a typical Booth workflow
+for a regression problem. The steps involved will be:
+
+\textbf{1. Loading the Data}\\
+\textbf{2. Understanding the Data}\\
+\textbf{3. Cleaning the Data}\\
+\textbf{4. Performing Analysis}\\
+\textbf{5. Visualizing the Results}
+
+The dataset we will be working with today is the ``mtcars'' dataset,
+which comes preloaded with RStudio. You can load it anytime to practice
+by simply referencing it in R:
+
+\begin{Shaded}
+\begin{Highlighting}[]
+\KeywordTok{print}\NormalTok{(mtcars)}
+\end{Highlighting}
+\end{Shaded}
+
+\begin{verbatim}
+##                      mpg cyl  disp  hp drat    wt  qsec vs am gear carb
+## Mazda RX4           21.0   6 160.0 110 3.90 2.620 16.46  0  1    4    4
+## Mazda RX4 Wag       21.0   6 160.0 110 3.90 2.875 17.02  0  1    4    4
+## Datsun 710          22.8   4 108.0  93 3.85 2.320 18.61  1  1    4    1
+## Hornet 4 Drive      21.4   6 258.0 110 3.08 3.215 19.44  1  0    3    1
+## Hornet Sportabout   18.7   8 360.0 175 3.15 3.440 17.02  0  0    3    2
+## Valiant             18.1   6 225.0 105 2.76 3.460 20.22  1  0    3    1
+## Duster 360          14.3   8 360.0 245 3.21 3.570 15.84  0  0    3    4
+## Merc 240D           24.4   4 146.7  62 3.69 3.190 20.00  1  0    4    2
+## Merc 230            22.8   4 140.8  95 3.92 3.150 22.90  1  0    4    2
+## Merc 280            19.2   6 167.6 123 3.92 3.440 18.30  1  0    4    4
+## Merc 280C           17.8   6 167.6 123 3.92 3.440 18.90  1  0    4    4
+## Merc 450SE          16.4   8 275.8 180 3.07 4.070 17.40  0  0    3    3
+## Merc 450SL          17.3   8 275.8 180 3.07 3.730 17.60  0  0    3    3
+## Merc 450SLC         15.2   8 275.8 180 3.07 3.780 18.00  0  0    3    3
+## Cadillac Fleetwood  10.4   8 472.0 205 2.93 5.250 17.98  0  0    3    4
+## Lincoln Continental 10.4   8 460.0 215 3.00 5.424 17.82  0  0    3    4
+## Chrysler Imperial   14.7   8 440.0 230 3.23 5.345 17.42  0  0    3    4
+## Fiat 128            32.4   4  78.7  66 4.08 2.200 19.47  1  1    4    1
+## Honda Civic         30.4   4  75.7  52 4.93 1.615 18.52  1  1    4    2
+## Toyota Corolla      33.9   4  71.1  65 4.22 1.835 19.90  1  1    4    1
+## Toyota Corona       21.5   4 120.1  97 3.70 2.465 20.01  1  0    3    1
+## Dodge Challenger    15.5   8 318.0 150 2.76 3.520 16.87  0  0    3    2
+## AMC Javelin         15.2   8 304.0 150 3.15 3.435 17.30  0  0    3    2
+## Camaro Z28          13.3   8 350.0 245 3.73 3.840 15.41  0  0    3    4
+## Pontiac Firebird    19.2   8 400.0 175 3.08 3.845 17.05  0  0    3    2
+## Fiat X1-9           27.3   4  79.0  66 4.08 1.935 18.90  1  1    4    1
+## Porsche 914-2       26.0   4 120.3  91 4.43 2.140 16.70  0  1    5    2
+## Lotus Europa        30.4   4  95.1 113 3.77 1.513 16.90  1  1    5    2
+## Ford Pantera L      15.8   8 351.0 264 4.22 3.170 14.50  0  1    5    4
+## Ferrari Dino        19.7   6 145.0 175 3.62 2.770 15.50  0  1    5    6
+## Maserati Bora       15.0   8 301.0 335 3.54 3.570 14.60  0  1    5    8
+## Volvo 142E          21.4   4 121.0 109 4.11 2.780 18.60  1  1    4    2
+\end{verbatim}
+
+I asked you to download a slightly modified version of the file to allow
+us to practice some fundamentals. Let's load that version into R and
+save it as ``data'':
+
+\begin{Shaded}
+\begin{Highlighting}[]
+\CommentTok{#The read.csv function allows us to load a comma separated values file into our R workspace}
+\CommentTok{#Remember you can use the ? symbol to load the native R help files at any time!}
+\NormalTok{data <-}\StringTok{ }\KeywordTok{read.csv}\NormalTok{(}\StringTok{"C:}\CharTok{\textbackslash{}\textbackslash{}}\StringTok{Users}\CharTok{\textbackslash{}\textbackslash{}}\StringTok{livef}\CharTok{\textbackslash{}\textbackslash{}}\StringTok{Downloads}\CharTok{\textbackslash{}\textbackslash{}}\StringTok{mtcars_missing_data.csv"}\NormalTok{)}
+\CommentTok{#Note that R for Windows requires 2 "\textbackslash{}" when calling a filepath }
+\end{Highlighting}
+\end{Shaded}
+
+Now that we've loaded the data, the first thing we should do is make
+sure we understand what the data contains. Let's try a couple functions
+that will be helpful for doing that!
+
+\begin{Shaded}
+\begin{Highlighting}[]
+\CommentTok{#The str() function tells us the name of each variable in a dataset, its type, and previews some of the values}
+\KeywordTok{str}\NormalTok{(data)}
+\end{Highlighting}
+\end{Shaded}
+
+\begin{verbatim}
+## 'data.frame':    33 obs. of  12 variables:
+##  $ X   : Factor w/ 33 levels "AMC Javelin",..: 18 19 5 13 14 32 7 21 20 22 ...
+##  $ mpg : num  21 21 22.8 21.4 18.7 18.1 14.3 24.4 22.8 19.2 ...
+##  $ cyl : int  6 6 4 6 8 6 8 4 4 6 ...
+##  $ disp: num  160 160 108 258 360 ...
+##  $ hp  : int  110 110 93 110 175 105 245 62 95 123 ...
+##  $ drat: num  3.9 3.9 3.85 3.08 3.15 2.76 3.21 3.69 3.92 3.92 ...
+##  $ wt  : num  2.62 2.88 2.32 3.21 3.44 ...
+##  $ qsec: num  16.5 17 18.6 19.4 17 ...
+##  $ vs  : int  0 0 1 1 0 1 0 1 1 1 ...
+##  $ am  : int  1 1 1 0 0 0 0 0 0 0 ...
+##  $ gear: int  4 4 4 3 3 3 3 4 4 4 ...
+##  $ carb: int  4 4 1 1 2 1 4 2 2 4 ...
+\end{verbatim}
+
+\begin{Shaded}
+\begin{Highlighting}[]
+\CommentTok{#The summary() function gives us descriptive statistics for each variable, and crucially the number of missing values!}
+\KeywordTok{summary}\NormalTok{(data)}
+\end{Highlighting}
+\end{Shaded}
+
+\begin{verbatim}
+##                   X           mpg             cyl             disp      
+##  AMC Javelin       : 1   Min.   :10.40   Min.   :4.000   Min.   : 71.1  
+##  Cadillac Fleetwood: 1   1st Qu.:15.43   1st Qu.:4.000   1st Qu.:120.8  
+##  Camaro Z28        : 1   Median :19.20   Median :6.000   Median :196.3  
+##  Chrysler Imperial : 1   Mean   :20.09   Mean   :6.188   Mean   :230.7  
+##  Datsun 710        : 1   3rd Qu.:22.80   3rd Qu.:8.000   3rd Qu.:326.0  
+##  Dodge Challenger  : 1   Max.   :33.90   Max.   :8.000   Max.   :472.0  
+##  (Other)           :27   NA's   :1       NA's   :1       NA's   :1      
+##        hp             drat             wt             qsec      
+##  Min.   : 52.0   Min.   :2.760   Min.   :1.513   Min.   :14.50  
+##  1st Qu.: 96.5   1st Qu.:3.080   1st Qu.:2.581   1st Qu.:16.89  
+##  Median :123.0   Median :3.695   Median :3.325   Median :17.71  
+##  Mean   :146.7   Mean   :3.597   Mean   :3.217   Mean   :17.85  
+##  3rd Qu.:180.0   3rd Qu.:3.920   3rd Qu.:3.610   3rd Qu.:18.90  
+##  Max.   :335.0   Max.   :4.930   Max.   :5.424   Max.   :22.90  
+##  NA's   :1       NA's   :1       NA's   :1       NA's   :1      
+##        vs               am              gear            carb      
+##  Min.   :0.0000   Min.   :0.0000   Min.   :3.000   Min.   :1.000  
+##  1st Qu.:0.0000   1st Qu.:0.0000   1st Qu.:3.000   1st Qu.:2.000  
+##  Median :0.0000   Median :0.0000   Median :4.000   Median :2.000  
+##  Mean   :0.4375   Mean   :0.4062   Mean   :3.688   Mean   :2.812  
+##  3rd Qu.:1.0000   3rd Qu.:1.0000   3rd Qu.:4.000   3rd Qu.:4.000  
+##  Max.   :1.0000   Max.   :1.0000   Max.   :5.000   Max.   :8.000  
+##  NA's   :1        NA's   :1        NA's   :1       NA's   :1
+\end{verbatim}
+
+\begin{Shaded}
+\begin{Highlighting}[]
+\CommentTok{#If we just wanted to understand one column in the data, we could do that as well using the $ operator}
+\KeywordTok{summary}\NormalTok{(data}\OperatorTok{$}\NormalTok{mpg)}
+\end{Highlighting}
+\end{Shaded}
+
+\begin{verbatim}
+##    Min. 1st Qu.  Median    Mean 3rd Qu.    Max.    NA's 
+##   10.40   15.43   19.20   20.09   22.80   33.90       1
+\end{verbatim}
+
+\textbf{Oh no! Jeff is a jerk who has added some missing values to the
+data. This will ruin our analysis so we have no choice but to learn how
+to clean data with missings!}
+
+First, let's identify where the missings are in our data using the
+is.na() function and subsetting syntax we learned last week. Let's find
+all missings for the mpg variable.
+
+\begin{Shaded}
+\begin{Highlighting}[]
+\CommentTok{#Remember, [] is used to subset. The number before the comma is the row, while the number after the comma is the column.}
+\CommentTok{#If no number is provided, R assumes you want all rows/columns}
+\NormalTok{data[}\KeywordTok{is.na}\NormalTok{(data}\OperatorTok{$}\NormalTok{mpg),]}
+\end{Highlighting}
+\end{Shaded}
+
+\begin{verbatim}
+##                X mpg cyl disp hp drat wt qsec vs am gear carb
+## 33 Tesla Model S  NA  NA   NA NA   NA NA   NA NA NA   NA   NA
+\end{verbatim}
+
+It appears that all data for the Tesla Model S in row 33 is missing. In
+this case, it makes sense to remove this row from our dataset before
+proceeding. Let's do that now.
+
+\begin{Shaded}
+\begin{Highlighting}[]
+\CommentTok{#The complete.case() funciton is a base R function that identifies rows with no missing data. It will make your life easier}
+\NormalTok{data_non_missing <-}\StringTok{ }\NormalTok{data[}\KeywordTok{complete.cases}\NormalTok{(data),]}
+\CommentTok{#The head() and tail() functions show you the first/last n observations in the data.frame}
+\KeywordTok{tail}\NormalTok{(data_non_missing,}\DecValTok{5}\NormalTok{)}
+\end{Highlighting}
+\end{Shaded}
+
+\begin{verbatim}
+##                 X  mpg cyl  disp  hp drat    wt qsec vs am gear carb
+## 28   Lotus Europa 30.4   4  95.1 113 3.77 1.513 16.9  1  1    5    2
+## 29 Ford Pantera L 15.8   8 351.0 264 4.22 3.170 14.5  0  1    5    4
+## 30   Ferrari Dino 19.7   6 145.0 175 3.62 2.770 15.5  0  1    5    6
+## 31  Maserati Bora 15.0   8 301.0 335 3.54 3.570 14.6  0  1    5    8
+## 32     Volvo 142E 21.4   4 121.0 109 4.11 2.780 18.6  1  1    4    2
+\end{verbatim}
+
+Note that row 33 is now gone from our data\_non\_missing data.frame.
+
+Another common data cleaning step is creating categorical variables from
+numeric ones. For example, let's imagine we do not care about the
+difference between a 6 cylinder car and an 8 cylinder car. We just want
+to know if a car has a low amount of cylinders (4) or a high amount of
+cylinders (\textgreater{}4). Let's create a cyl\_status variable to
+capture this information.
+
+\begin{Shaded}
+\begin{Highlighting}[]
+\CommentTok{#You can assign data to a type by using the as.'type'() function. Here we set our  variable to type factor (or categorical)}
+\CommentTok{#The ifelse function allows you to to specify a logical condition, a value to return if true, and one to return if false}
+\NormalTok{data_non_missing}\OperatorTok{$}\NormalTok{cyl_status <-}\StringTok{ }\KeywordTok{as.factor}\NormalTok{(}\KeywordTok{ifelse}\NormalTok{(data_non_missing}\OperatorTok{$}\NormalTok{cyl }\OperatorTok{>}\StringTok{ }\DecValTok{4}\NormalTok{, }\StringTok{'high'}\NormalTok{, }\StringTok{'low'}\NormalTok{))}
+\KeywordTok{summary}\NormalTok{(data_non_missing}\OperatorTok{$}\NormalTok{cyl_status)}
+\end{Highlighting}
+\end{Shaded}
+
+\begin{verbatim}
+## high  low 
+##   21   11
+\end{verbatim}
+
+11 of ours cars have 4 cylinders, while the remaining 21 are V6 or V8s.
+
+Now that we've removed all missings, let's introduce the concept of
+plotting. First, let's plot miles per gallon since it will eventually
+become the dependent variable in our regression.
+
+\begin{Shaded}
+\begin{Highlighting}[]
+\CommentTok{#A histogram is a useful plot for showing a univariate distribution. You can specify the number of buckets, e.g. 10}
+\KeywordTok{hist}\NormalTok{(data_non_missing}\OperatorTok{$}\NormalTok{mpg, }\DecValTok{10}\NormalTok{)}
+\end{Highlighting}
+\end{Shaded}
+
+\includegraphics{Intermediate_R_files/figure-latex/unnamed-chunk-9-1.pdf}
+
+Now let's try to understand how other variables relate to miles per
+gallon. To do this, let's begin by plotting the relationship between a
+car's weight (wt) and its mpg.
+
+\begin{Shaded}
+\begin{Highlighting}[]
+\CommentTok{#The plot function is a base R package for plotting. Eventually you'll want to use ggplot2 to create the pretty charts we showed last week, but plot is good enough for getting a rough understanding of the data}
+\KeywordTok{plot}\NormalTok{(data_non_missing}\OperatorTok{$}\NormalTok{wt,data_non_missing}\OperatorTok{$}\NormalTok{mpg)}
+\end{Highlighting}
+\end{Shaded}
+
+\includegraphics{Intermediate_R_files/figure-latex/unnamed-chunk-10-1.pdf}
+
+Clearly miles per gallon tends to fall as weight increases, but is this
+relationship statistically meaningful? Let's find out by running a
+simple linear regression!
+
+The lm() function stands for `Linear Model' and is used to run
+regressions in R. lm() requires a formula detailing the dependent and
+independent variable(s) in the format `y \textasciitilde{} x'
+
+\begin{Shaded}
+\begin{Highlighting}[]
+\CommentTok{#You can save your regression model as an object in your R environment the same as any other variable}
+\NormalTok{reg <-}\StringTok{ }\KeywordTok{lm}\NormalTok{(mpg}\OperatorTok{~}\NormalTok{wt,}\DataTypeTok{data=}\NormalTok{data_non_missing)}
+\CommentTok{#Note that I have used the data= argument so I don't have to reference the dataset each variable comes from}
+\CommentTok{#Now let's output the results of the regression using summary()}
+\KeywordTok{summary}\NormalTok{(reg)}
+\end{Highlighting}
+\end{Shaded}
+
+\begin{verbatim}
+## 
+## Call:
+## lm(formula = mpg ~ wt, data = data_non_missing)
+## 
+## Residuals:
+##     Min      1Q  Median      3Q     Max 
+## -4.5432 -2.3647 -0.1252  1.4096  6.8727 
+## 
+## Coefficients:
+##             Estimate Std. Error t value Pr(>|t|)    
+## (Intercept)  37.2851     1.8776  19.858  < 2e-16 ***
+## wt           -5.3445     0.5591  -9.559 1.29e-10 ***
+## ---
+## Signif. codes:  0 '***' 0.001 '**' 0.01 '*' 0.05 '.' 0.1 ' ' 1
+## 
+## Residual standard error: 3.046 on 30 degrees of freedom
+## Multiple R-squared:  0.7528, Adjusted R-squared:  0.7446 
+## F-statistic: 91.38 on 1 and 30 DF,  p-value: 1.294e-10
+\end{verbatim}
+
+The summary function outputs the formula for the regression, the range
+of the residuals, the coefficient estimates and their significance, an
+R-squared value, and a F-statistic. We can see in our regression that an
+increase in weight of 1 is associated with a decrease in mpg of -5.3445,
+which is highly significant. Let's overlay a plot of this linear model
+on top of our data.
+
+\begin{Shaded}
+\begin{Highlighting}[]
+\CommentTok{#You can overlay a regression line on a plot by simply calling the abline() command and adding the regression model as the argument}
+\KeywordTok{plot}\NormalTok{(data_non_missing}\OperatorTok{$}\NormalTok{wt,data_non_missing}\OperatorTok{$}\NormalTok{mpg)}
+\KeywordTok{abline}\NormalTok{(reg)}
+\end{Highlighting}
+\end{Shaded}
+
+\includegraphics{Intermediate_R_files/figure-latex/unnamed-chunk-12-1.pdf}
+
+Interesting! It seems like the line is too low at the ends, and too high
+in the middle. Let's explore this further by graphing the residuals.
+
+\begin{Shaded}
+\begin{Highlighting}[]
+\CommentTok{#One of the components of the regression output are the residuals, or the difference between the predicted value and the actual value for given an observation}
+\CommentTok{#The regression output is in the same order as the input data, so we can simply graph our independent variable against our residuals}
+\KeywordTok{plot}\NormalTok{(data_non_missing}\OperatorTok{$}\NormalTok{wt,reg}\OperatorTok{$}\NormalTok{residuals)}
+\KeywordTok{abline}\NormalTok{(}\DecValTok{0}\NormalTok{,}\DecValTok{0}\NormalTok{)}
+\end{Highlighting}
+\end{Shaded}
+
+\includegraphics{Intermediate_R_files/figure-latex/unnamed-chunk-13-1.pdf}
+
+As we suspected, the residuals are not normally distributed! Perhaps we
+should consider adding a squared weight term to our model. A perfect
+excuse to explore multiple linear regression!
+
+\begin{Shaded}
+\begin{Highlighting}[]
+\CommentTok{#First lets create a squared weight term}
+\NormalTok{data_non_missing}\OperatorTok{$}\NormalTok{wt2 <-}\StringTok{ }\NormalTok{data_non_missing}\OperatorTok{$}\NormalTok{wt}\OperatorTok{^}\DecValTok{2}
+
+\CommentTok{#Multiple linear regression is exactly the same as our prior example, except that additional variables are referenced in the formula statement with a '+' symbol, e.g. 'y ~ x1 + x2'}
+\NormalTok{reg2 <-}\StringTok{ }\KeywordTok{lm}\NormalTok{(mpg}\OperatorTok{~}\NormalTok{wt}\OperatorTok{+}\NormalTok{wt2,}\DataTypeTok{data=}\NormalTok{data_non_missing)}
+\KeywordTok{summary}\NormalTok{(reg2)}
+\end{Highlighting}
+\end{Shaded}
+
+\begin{verbatim}
+## 
+## Call:
+## lm(formula = mpg ~ wt + wt2, data = data_non_missing)
+## 
+## Residuals:
+##    Min     1Q Median     3Q    Max 
+## -3.483 -1.998 -0.773  1.462  6.238 
+## 
+## Coefficients:
+##             Estimate Std. Error t value Pr(>|t|)    
+## (Intercept)  49.9308     4.2113  11.856 1.21e-12 ***
+## wt          -13.3803     2.5140  -5.322 1.04e-05 ***
+## wt2           1.1711     0.3594   3.258  0.00286 ** 
+## ---
+## Signif. codes:  0 '***' 0.001 '**' 0.01 '*' 0.05 '.' 0.1 ' ' 1
+## 
+## Residual standard error: 2.651 on 29 degrees of freedom
+## Multiple R-squared:  0.8191, Adjusted R-squared:  0.8066 
+## F-statistic: 65.64 on 2 and 29 DF,  p-value: 1.715e-11
+\end{verbatim}
+
+Adding a squared term certainly improved our adjusted R-squared. Let's
+check our residuals again.
+
+\begin{Shaded}
+\begin{Highlighting}[]
+\KeywordTok{plot}\NormalTok{(data_non_missing}\OperatorTok{$}\NormalTok{wt,reg2}\OperatorTok{$}\NormalTok{residuals)}
+\KeywordTok{abline}\NormalTok{(}\DecValTok{0}\NormalTok{,}\DecValTok{0}\NormalTok{)}
+\end{Highlighting}
+\end{Shaded}
+
+\includegraphics{Intermediate_R_files/figure-latex/unnamed-chunk-15-1.pdf}
+That certainly looks better!
+
+Because base R functions only plot straight lines, we're going to have
+to get a little fancy and introduce another important part of
+regressions in R, the predict() function. The predict function will take
+a set of independent variable values you give it and output the predict
+the associated dependent variable value. By creating a sequence of wt
+measures that are spaced very close together, we will be able to
+approximate a curve matching our polynomial model. Let's give it a shot.
+
+\begin{Shaded}
+\begin{Highlighting}[]
+\CommentTok{#We want to plot our data from a wt range of 1 to 6. In order to do that let's use the seq() function.}
+\CommentTok{#We'll need a lot of points inbetween to make a smooth-looking curve and a dataframe to store them in}
+\NormalTok{predict_range <-}\StringTok{ }\KeywordTok{data.frame}\NormalTok{(}\DataTypeTok{wt =} \KeywordTok{seq}\NormalTok{(}\DecValTok{1}\NormalTok{,}\DecValTok{6}\NormalTok{,}\DataTypeTok{by=}\FloatTok{0.001}\NormalTok{), }\DataTypeTok{wt2 =} \KeywordTok{seq}\NormalTok{(}\DecValTok{1}\NormalTok{,}\DecValTok{6}\NormalTok{,}\DataTypeTok{by=}\FloatTok{0.001}\NormalTok{)}\OperatorTok{^}\DecValTok{2}\NormalTok{)}
+
+\CommentTok{#Now let's calculate the predicted mpg for each weight using the predict function}
+\CommentTok{#CAUTION: It is paramount that your new_data variables have the EXACT SAME NAME as your regression model, otherwise predict WILL NOT WORK}
+\NormalTok{predict_range}\OperatorTok{$}\NormalTok{fitted<-}\KeywordTok{predict}\NormalTok{(reg2,}\DataTypeTok{newdata=}\NormalTok{predict_range)}
+
+\CommentTok{#Now lets plot the result}
+\KeywordTok{plot}\NormalTok{(data_non_missing}\OperatorTok{$}\NormalTok{wt,data_non_missing}\OperatorTok{$}\NormalTok{mpg)}
+\KeywordTok{lines}\NormalTok{(predict_range}\OperatorTok{$}\NormalTok{wt,predict_range}\OperatorTok{$}\NormalTok{fitted)}
+\end{Highlighting}
+\end{Shaded}
+
+\includegraphics{Intermediate_R_files/figure-latex/unnamed-chunk-16-1.pdf}
+
+Not bad! Obviously this has been a tremendously simplified version of
+what you will actually do in class, but now you should have the basic
+skills to get started. Any questions?
+
+
+\end{document}
